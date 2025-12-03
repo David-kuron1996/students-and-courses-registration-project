@@ -50,4 +50,40 @@ def update_student(student_id, name=None, email=None, phone=None, address=None):
     values.append(student_id)
     query = f"UPDATE students SET {', '.join(fields)} WHERE id = ?"
     
-            
+    try:
+        cursor.execute(query, values)
+        conn.commit()
+        if cursor.rowcount > 0:
+            print(f"Student with ID {student_id} updated successfully!")
+            return True
+        else:
+            print(f"Student with ID {student_id} not found.")
+            return False
+    except sqlite3.IntegrityError:
+        print("Error: A student with this email already exists.")
+        return False
+    except Exception as e:
+        print(f"Error updating student: {e}")
+        return False
+    finally:
+        conn.close()
+
+def delete_student(student_id):
+    """Delete a student from the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
+        conn.commit()
+        if cursor.rowcount > 0:
+            print(f"Student with ID {student_id} deleted successfully!")
+            return True 
+        else:
+            print(f"Student with ID {student_id} not found.")
+            return False
+    except Exception as e:
+        print(f"Error deleting student: {e}")
+        return False
+    finally:
+        conn.close()  
