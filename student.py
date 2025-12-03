@@ -87,27 +87,3 @@ def delete_student(student_id):
         return False
     finally:
         conn.close() 
-def list_students():
-    """List all students in the database."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    try:
-        cursor.execute("SELECT id, name, email, phone, address FROM students")
-        students = cursor.fetchall()
-        
-        if not students:
-            print("No students found.")
-            return
-        
-        print("\nStudents List:")
-        print("-" * 60)
-        print(f"{'ID':<5} {'Name':<20} {'Email':<25} {'Phone':<12} {'Address':<30}")
-        print("-" * 60)
-        
-        for student in students:
-            print(f"{student['id']:<5} {student['name']:<20} {student['email']:<25} {student['phone'] or 'N/A':<12} {student['address'] or 'N/A':<30}")
-    except Exception as e:
-        print(f"Error listing students: {e}")
-    finally:
-        conn.close()         
