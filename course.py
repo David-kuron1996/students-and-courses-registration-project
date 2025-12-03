@@ -64,7 +64,7 @@ def update_course(course_id, name=None, code=None, description=None):
         return False
     finally:
         conn.close()
-        
+
 def delete_course(course_id):
     """Delete a course from the database."""
     conn = get_db_connection()
@@ -85,27 +85,3 @@ def delete_course(course_id):
     finally:
         conn.close()
 
-def list_courses():
-    """List all courses in the database."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    try:
-        cursor.execute("SELECT id, name, code, description FROM courses")
-        courses = cursor.fetchall()
-        
-        if not courses:
-            print("No courses found.")
-            return
-        
-        print("\nCourses List:")
-        print("-" * 70)
-        print(f"{'ID':<5} {'Name':<20} {'Code':<10} {'Description':<35}")
-        print("-" * 70)
-        
-        for course in courses:
-            print(f"{course['id']:<5} {course['name']:<20} {course['code']:<10} {course['description'] or 'N/A':<35}")
-    except Exception as e:
-        print(f"Error listing courses: {e}")
-    finally:
-        conn.close()       
-            
