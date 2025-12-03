@@ -30,4 +30,22 @@ def main():
             address = input("Enter new address (current: ").strip() or None
             
             update_student(student_id, name, email, phone, address)
+        elif choice == 3:  # Delete Student
+            list_students()
+            student_id = get_user_input("\nEnter student ID to delete: ", int)
+            confirm = input(f"Are you sure you want to delete student with ID {student_id}? (y/n): ").lower()
+            if confirm == 'y':
+                delete_student(student_id)
+            else:
+                print("Deletion cancelled.")
+                
+        elif choice == 4:  # List Students
+            list_students()
+            
+        elif choice == 5:  # Add Course
+            print("\nAdd New Course")
+            name = input("Enter course name: ")
+            code = input("Enter course code: ")
+            description = input("Enter course description (optional): ") or None
+            add_course(name, code, description)    
             
