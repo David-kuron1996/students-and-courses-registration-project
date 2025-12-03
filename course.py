@@ -21,3 +21,47 @@ def add_course(name, code, description=None):
         return False
     finally:
         conn.close()
+
+def update_course(course_id, name=None, code=None, description=None):
+    """Update course information."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Build the update query dynamically
+    fields = []
+    values = []
+    
+    if name:
+        fields.append("name = ?")
+        values.append(name)
+    if code:
+        fields.append("code = ?")
+        values.append(code)
+    if description:
+        fields.append("description = ?")
+        values.append(description)
+    
+    if not fields:
+        print("No fields to update.")
+        return False
+    
+    values.append(course_id)
+    query = f"UPDATE courses SET {', '.join(fields)} WHERE id = ?"
+    try:
+        cursor.execute(query, values)
+        conn.commit()
+        if cursor.rowcount > 0:
+            print(f"Course with ID {course_id} updated successfully!")
+            return True
+        else:
+            print(f"Course with ID {course_id} not found.")
+            return False
+    except sqlite3.IntegrityError:
+        print("Error: A course with this code already exists.")
+        return False
+    except Exception as e:
+        print(f"Error updating course: {e}")
+        return False
+    finally:
+        conn.close()
+            
