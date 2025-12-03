@@ -64,6 +64,7 @@ def update_course(course_id, name=None, code=None, description=None):
         return False
     finally:
         conn.close()
+        
 def delete_course(course_id):
     """Delete a course from the database."""
     conn = get_db_connection()
