@@ -64,4 +64,29 @@ def update_course(course_id, name=None, code=None, description=None):
         return False
     finally:
         conn.close()
+def delete_course(course_id):
+    """Delete a course from the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("DELETE FROM courses WHERE id = ?", (course_id,))
+        conn.commit()
+        if cursor.rowcount > 0:
+            print(f"Course with ID {course_id} deleted successfully!")
+            return True
+        else:
+            print(f"Course with ID {course_id} not found.")
+            return False
+    except Exception as e:
+        print(f"Error deleting course: {e}")
+        return False
+    finally:
+        conn.close()
+
+def list_courses():
+    """List all courses in the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+            
             
