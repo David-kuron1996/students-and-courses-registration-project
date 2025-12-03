@@ -47,5 +47,28 @@ def main():
             name = input("Enter course name: ")
             code = input("Enter course code: ")
             description = input("Enter course description (optional): ") or None
-            add_course(name, code, description)    
+            add_course(name, code, description) 
+        elif choice == 6:  # Update Course
+            list_courses()
+            course_id = get_user_input("\nEnter course ID to update: ", int)
+            print("\nLeave blank to keep current value")
+            
+            name = input("Enter new name (current: ").strip() or None
+            code = input("Enter new code (current: ").strip() or None
+            description = input("Enter new description (current: ").strip() or None
+            
+            update_course(course_id, name, code, description)
+            
+        elif choice == 7:  # Delete Course
+            list_courses()
+            course_id = get_user_input("\nEnter course ID to delete: ", int)
+            confirm = input(f"Are you sure you want to delete course with ID {course_id}? (y/n): ").lower()
+            if confirm == 'y':
+                delete_course(course_id)
+            else:
+                print("Deletion cancelled.")
+                
+        elif choice == 8:  # List Courses
+            list_courses()
+                   
             
