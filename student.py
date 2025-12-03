@@ -21,3 +21,33 @@ def add_student(name, email, phone=None, address=None):
         return False
     finally:
         conn.close()
+def update_student(student_id, name=None, email=None, phone=None, address=None):
+    """Update student information."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Build the update query dynamically
+    fields = []
+    values = []
+    
+    if name:
+        fields.append("name = ?")
+        values.append(name)
+    if email:
+        fields.append("email = ?")
+        values.append(email)
+    if phone:
+        fields.append("phone = ?")
+        values.append(phone)
+    if address:
+        fields.append("address = ?")
+        values.append(address)
+    
+    if not fields:
+        print("No fields to update.")
+        return False
+    
+    values.append(student_id)
+    query = f"UPDATE students SET {', '.join(fields)} WHERE id = ?"
+    
+            
