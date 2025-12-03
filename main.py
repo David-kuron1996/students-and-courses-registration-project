@@ -28,8 +28,8 @@ def main():
             email = input("Enter new email (current: ").strip() or None
             phone = input("Enter new phone (current: ").strip() or None
             address = input("Enter new address (current: ").strip() or None
-            
             update_student(student_id, name, email, phone, address)
+
         elif choice == 3:  # Delete Student
             list_students()
             student_id = get_user_input("\nEnter student ID to delete: ", int)
@@ -39,16 +39,16 @@ def main():
             else:
                 print("Deletion cancelled.")
                 
-        elif choice == 4:  # List Students
-            list_students()
+        
             
-        elif choice == 5:  # Add Course
+        elif choice == 4:  # Add Course
             print("\nAdd New Course")
             name = input("Enter course name: ")
             code = input("Enter course code: ")
             description = input("Enter course description (optional): ") or None
             add_course(name, code, description) 
-        elif choice == 6:  # Update Course
+            
+        elif choice == 5:  # Update Course
             list_courses()
             course_id = get_user_input("\nEnter course ID to update: ", int)
             print("\nLeave blank to keep current value")
@@ -59,7 +59,7 @@ def main():
             
             update_course(course_id, name, code, description)
             
-        elif choice == 7:  # Delete Course
+        elif choice == 6:  # Delete Course
             list_courses()
             course_id = get_user_input("\nEnter course ID to delete: ", int)
             confirm = input(f"Are you sure you want to delete course with ID {course_id}? (y/n): ").lower()
@@ -68,10 +68,8 @@ def main():
             else:
                 print("Deletion cancelled.")
                 
-        elif choice == 8:  # List Courses
-            list_courses()
 
-        elif choice == 9:  # Exit
+        elif choice == 7:  # Exit
             print("Thank you for using the Students Registration System. Goodbye!")
             break
             
