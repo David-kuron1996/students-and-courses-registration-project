@@ -70,5 +70,15 @@ def main():
                 
         elif choice == 8:  # List Courses
             list_courses()
+
+        elif choice == 9:  # Exit
+            print("Thank you for using the Students Registration System. Goodbye!")
+            break
+            
+        else:
+            print("Invalid choice. Please enter a number between 1 and 9.")
+
+if __name__ == "__main__":
+    main()    
                    
             
