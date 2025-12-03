@@ -67,9 +67,14 @@ def main():
                 delete_course(course_id)
             else:
                 print("Deletion cancelled.")
-                
 
-        elif choice == 7:  # Exit
+        elif choice == 7:  # List Students
+            list_students()
+        
+        elif choice == 8:  # List Courses
+            list_courses()
+
+        elif choice == 9:  # Exit
             print("Thank you for using the Students Registration System. Goodbye!")
             break
             

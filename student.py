@@ -87,3 +87,25 @@ def delete_student(student_id):
         return False
     finally:
         conn.close() 
+import sqlite3
+def list_students():
+    """List all students in the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("SELECT * FROM students")
+        students = cursor.fetchall()
+        
+        if students:
+            print("\nList of Students:")
+            print("=" * 50)
+            for student in students:
+                print(f"ID: {student['id']}, Name: {student['name']}, Email: {student['email']}, Phone: {student['phone']}, Address: {student['address']}, Created At: {student['created_at']}")
+            print("=" * 50)
+        else:
+            print("No students found.")
+    except Exception as e:
+        print(f"Error retrieving students: {e}")
+    finally:
+        conn.close()

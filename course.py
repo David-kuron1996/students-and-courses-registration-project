@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 from database import get_db_connection
 
 def add_course(name, code, description=None):
@@ -82,6 +83,33 @@ def delete_course(course_id):
     except Exception as e:
         print(f"Error deleting course: {e}")
         return False
+    finally:
+        conn.close()
+
+import sqlite3
+def list_courses():
+    """List all courses in the database."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("SELECT id, name, code, description, created_at FROM courses")
+        courses = cursor.fetchall()
+        
+        if courses:
+            print("\nCourses List:")
+            print("=" * 50)
+            for course in courses:
+                print(f"ID: {course['id']}")
+                print(f"Name: {course['name']}")
+                print(f"Code: {course['code']}")
+                print(f"Description: {course['description'] or 'N/A'}")
+                print(f"Created At: {course['created_at']}")
+                print("-" * 50)
+        else:
+            print("No courses found.")
+    except Exception as e:
+        print(f"Error retrieving courses: {e}")
     finally:
         conn.close()
 
