@@ -66,9 +66,44 @@ Enter your choice (1-9): 1
 
 ##### project installation #####
 
-1 - `Clone the Repository`
+1. `Clone the Repository`
 First, clone the repository from GitHub to your local machine using git:  
 `git clone git@github.com:David-kuron1996/students-and-courses-registration-project.git`
 
 Navigate into the project directory:
 `cd` your-repo-name
+
+2. `Install Dependencies`
+All necessary Python packages are listed in the  pipfile. Install them using pipenv:
+
+`pipenv install`
+
+To install a specific package:
+
+== pipenv install package_name == like `pipenv install flask`
+
+To install dev package:
+`pipenv install pytest --dev`
+
+To activate environment:
+`pipenv shell`
+
+###### Contributing ######
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature (`git checkout -b feature/amazing-feature`).
+3. Make your changes and commit them (`git commit -m 'Add some amazing feature`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
+
+******* project author *******
+
+*** Name ***: `DAVID KURON WILLIAM`
+
+*** Project Link ***: `https://github.com/David-kuron1996/students-and-courses-registration-project.git`
+
+
+
+
