@@ -39,16 +39,17 @@ def main():
             else:
                 print("Deletion cancelled.")
                 
-        
+        elif choice == 4:  # List Students
+            list_students()
             
-        elif choice == 4:  # Add Course
+        elif choice == 5:  # Add Course
             print("\nAdd New Course")
             name = input("Enter course name: ")
             code = input("Enter course code: ")
             description = input("Enter course description (optional): ") or None
             add_course(name, code, description) 
             
-        elif choice == 5:  # Update Course
+        elif choice == 6:  # Update Course
             list_courses()
             course_id = get_user_input("\nEnter course ID to update: ", int)
             print("\nLeave blank to keep current value")
@@ -59,7 +60,7 @@ def main():
             
             update_course(course_id, name, code, description)
             
-        elif choice == 6:  # Delete Course
+        elif choice == 7:  # Delete Course
             list_courses()
             course_id = get_user_input("\nEnter course ID to delete: ", int)
             confirm = input(f"Are you sure you want to delete course with ID {course_id}? (y/n): ").lower()
@@ -68,8 +69,7 @@ def main():
             else:
                 print("Deletion cancelled.")
 
-        elif choice == 7:  # List Students
-            list_students()
+       
         
         elif choice == 8:  # List Courses
             list_courses()
