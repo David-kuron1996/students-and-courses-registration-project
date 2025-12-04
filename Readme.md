@@ -5,21 +5,22 @@ A simple command-line interface (CLI) application for managing student and cours
 
 ## project features ##
 
-`add student` to add a new student with name, email, phone and address.
-`update student` to update student existing information.
-`delete student` to delete student from database.
-`student list` to list all student in database.
-`add course` to add new course.
-`update course` to update the existing course.
-`delete course` to delete out the exist course in database.
-`course list` to list all the courses in the database.
-`Exit` to exist out from the project. 
+1. `add student` to add a new student with name, email, phone and address.
+2. `update student` to update student existing information.
+3. `delete student` to delete student from database.
+4. `student list` to list all student in database.
+5. `add course` to add new course.
+6. `update course` to update the existing course.
+7. `delete course` to delete out the exist course in database.
+8. `course list` to list all the courses in the database.
+9. `Exit` to exist out from the project. 
 
 ### project usage ###
 
 Simply type the number corresponding to your desired action and press Enter. The system will then prompt you for the necessary information.
-         *** Example ***
-         python3 debug.py or python debug.py
+
+*** Example ***
+       file_name%  python3 debug.py or python debug.py
 
           ==== it show the below format ===
 
