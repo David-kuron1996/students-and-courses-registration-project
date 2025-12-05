@@ -13,7 +13,10 @@ A simple command-line interface (CLI) application for managing student and cours
 6. `update course` to update the existing course.
 7. `delete course` to delete out the exist course in database.
 8. `course list` to list all the courses in the database.
-9. `Exit` to exist out from the project. 
+9. `list Enrollment` to list student enrollment(relation between student and course).
+10. `Add Enrollment` to add enrollment(to coures to student by ID).
+11. `Remove Enrollment` to delete student enrollment(by ID).
+12. `Exit` to exist out from the project. 
 
 ### project usage ###
 
@@ -35,7 +38,10 @@ Students Registration System
 6. Update Course
 7. Delete Course
 8. List Courses
-9. Exit
+9. list Enrollment
+10. Add Enrollment
+11. Remove Enrollment
+12. Exit
 ========================================
 
 1.       Enter your choice (1-9): 1 
@@ -63,8 +69,9 @@ Students Registration System
 |- `database.py`      # Handles database connection and initialization.
 |- `student.py`       # Contains all functions related to student CRUD (Create, Read, Update, Delete) operations.
 |- `course.py`        # Contains all functions related to course CRUD operations.
-|- `school.db`      # SQLite database file.
-|- `debug.py`      # to Navigate to the project directory in your terminal or command prompt.
+|- `school.db`        # SQLite database file.
+|- `debug.py`         # to Navigate or run the project directory in your terminal or command prompt.
+|- `enrollment`       # contains all functions related to enrollment(relation between student and course)
 
 ##### project installation #####
 
