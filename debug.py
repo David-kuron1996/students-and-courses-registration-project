@@ -1,6 +1,8 @@
+# debug.py
 from database import init_db
 from student import add_student, update_student, delete_student, list_students
 from course import add_course, update_course, delete_course, list_courses
+from enrollment import add_enrollment, remove_enrollment, list_enrollments
 from main import display_menu, get_user_input
 
 def main():
@@ -9,7 +11,7 @@ def main():
     
     while True:
         display_menu()
-        choice = get_user_input("Enter your choice (1-9): ", int)
+        choice = get_user_input("Enter your choice (1-12): ", int)
         
         if choice == 1:  # Add Student
             print("\nAdd New Student")
@@ -93,13 +95,35 @@ def main():
 
         elif choice == 8:  # List Courses
             list_courses()
-
-        elif choice == 9:  # Exit
+            
+        elif choice == 9:  # List Enrollments
+            list_enrollments()
+            
+        elif choice == 10:  # Add Enrollment
+            list_students()
+            student_id = get_user_input("\nEnter student ID to enroll: ", int)
+            
+            list_courses()
+            course_id = get_user_input("\nEnter course ID to enroll in: ", int)
+            
+            add_enrollment(student_id, course_id)
+            
+        elif choice == 11:  # Remove Enrollment
+            list_enrollments()
+            enrollment_id = get_user_input("\nEnter enrollment ID to remove: ", int)
+            
+            confirm = input(f"Are you sure you want to remove this enrollment? (y/n): ").lower()
+            if confirm == 'y':
+                remove_enrollment(enrollment_id)
+            else:
+                print("Removal cancelled.")
+                
+        elif choice == 12:  # Exit
             print("Thank you for using the Students Registration System. Goodbye!")
             break
             
         else:
-            print("Invalid choice. Please enter a number between 1 and 9.")
+            print("Invalid choice. Please enter a number between 1 and 12.")
 
 if __name__ == "__main__":
     main()

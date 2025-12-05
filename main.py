@@ -1,3 +1,4 @@
+# main.py
 def get_user_input(prompt, input_type=str):
     """Get user input with type validation."""
     while True:
@@ -24,5 +25,8 @@ def display_menu():
     print("6. Update Course")
     print("7. Delete Course")
     print("8. List Courses")
-    print("9. Exit")
+    print("9. List Enrollments")
+    print("10. Add Enrollment")
+    print("11. Remove Enrollment")
+    print("12. Exit")
     print("=" * 30)

@@ -1,6 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
+# database.py
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship, sessionmaker
 import os
 
 # Database setup
@@ -16,6 +17,9 @@ class Student(Base):
     phone = Column(String)
     address = Column(String)
     created_at = Column(DateTime, default=func.current_timestamp())
+    
+    # Relationship to enrollments
+    enrollments = relationship("Enrollment", back_populates="student")
 
 class Course(Base):
     __tablename__ = 'courses'
@@ -25,6 +29,21 @@ class Course(Base):
     code = Column(String, nullable=False, unique=True)
     description = Column(String)
     created_at = Column(DateTime, default=func.current_timestamp())
+    
+    # Relationship to enrollments
+    enrollments = relationship("Enrollment", back_populates="course")
+
+class Enrollment(Base):
+    __tablename__ = 'enrollments'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    student_id = Column(Integer, ForeignKey('students.id'), nullable=False)
+    course_id = Column(Integer, ForeignKey('courses.id'), nullable=False)
+    enrolled_at = Column(DateTime, default=func.current_timestamp())
+    
+    # Relationships
+    student = relationship("Student", back_populates="enrollments")
+    course = relationship("Course", back_populates="enrollments")
 
 def get_db_connection():
     """Create a connection to the SQLite database using SQLAlchemy."""
