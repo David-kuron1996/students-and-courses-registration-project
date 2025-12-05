@@ -1,41 +1,44 @@
-import sqlite3
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, func
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
 
-
+# Database setup
 DB_NAME = "school.db"
+Base = declarative_base()
+
+class Student(Base):
+    __tablename__ = 'students'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    email = Column(String, nullable=False, unique=True)
+    phone = Column(String)
+    address = Column(String)
+    created_at = Column(DateTime, default=func.current_timestamp())
+
+class Course(Base):
+    __tablename__ = 'courses'
+    
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    code = Column(String, nullable=False, unique=True)
+    description = Column(String)
+    created_at = Column(DateTime, default=func.current_timestamp())
 
 def get_db_connection():
-    """Create a connection to the SQLite database."""
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """Create a connection to the SQLite database using SQLAlchemy."""
+    # Check if database file exists, if not create it
+    if not os.path.exists(DB_NAME):
+        engine = create_engine(f'sqlite:///{DB_NAME}')
+        Base.metadata.create_all(engine)
+    else:
+        engine = create_engine(f'sqlite:///{DB_NAME}')
+    
+    Session = sessionmaker(bind=engine)
+    return Session()
 
 def init_db():
     """Initialize the database and create tables if they don't exist."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # Create students table
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS students (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        email TEXT NOT NULL UNIQUE,
-        phone TEXT,
-        address TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """)
-    
-    # Create courses table
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS courses (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        code TEXT NOT NULL UNIQUE,
-        description TEXT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    """)
-    
-    conn.commit()
-    conn.close()
+    engine = create_engine(f'sqlite:///{DB_NAME}')
+    Base.metadata.create_all(engine)

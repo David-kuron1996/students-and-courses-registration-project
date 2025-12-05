@@ -22,12 +22,23 @@ def main():
         elif choice == 2:  # Update Student
             list_students()
             student_id = get_user_input("\nEnter student ID to update: ", int)
-            print("\nLeave blank to keep current value")
+            student = None
+            # Get current student data
+            from database import get_db_connection, Student
+            session = get_db_connection()
+            try:
+                student = session.query(Student).filter_by(id=student_id).first()
+                if not student:
+                    print(f"Student with ID {student_id} not found.")
+                    continue
+            finally:
+                session.close()
             
-            name = input("Enter new name (current: ").strip() or None
-            email = input("Enter new email (current: ").strip() or None
-            phone = input("Enter new phone (current: ").strip() or None
-            address = input("Enter new address (current: ").strip() or None
+            print("\nLeave blank to keep current value")
+            name = input(f"Enter new name (current: {student.name}): ").strip() or None
+            email = input(f"Enter new email (current: {student.email}): ").strip() or None
+            phone = input(f"Enter new phone (current: {student.phone or 'N/A'}): ").strip() or None
+            address = input(f"Enter new address (current: {student.address or 'N/A'}): ").strip() or None
             update_student(student_id, name, email, phone, address)
 
         elif choice == 3:  # Delete Student
@@ -52,11 +63,22 @@ def main():
         elif choice == 6:  # Update Course
             list_courses()
             course_id = get_user_input("\nEnter course ID to update: ", int)
-            print("\nLeave blank to keep current value")
+            course = None
+            # Get current course data
+            from database import get_db_connection, Course
+            session = get_db_connection()
+            try:
+                course = session.query(Course).filter_by(id=course_id).first()
+                if not course:
+                    print(f"Course with ID {course_id} not found.")
+                    continue
+            finally:
+                session.close()
             
-            name = input("Enter new name (current: ").strip() or None
-            code = input("Enter new code (current: ").strip() or None
-            description = input("Enter new description (current: ").strip() or None
+            print("\nLeave blank to keep current value")
+            name = input(f"Enter new name (current: {course.name}): ").strip() or None
+            code = input(f"Enter new code (current: {course.code}): ").strip() or None
+            description = input(f"Enter new description (current: {course.description or 'N/A'}): ").strip() or None
             
             update_course(course_id, name, code, description)
             
@@ -69,8 +91,6 @@ def main():
             else:
                 print("Deletion cancelled.")
 
-       
-        
         elif choice == 8:  # List Courses
             list_courses()
 
@@ -82,6 +102,4 @@ def main():
             print("Invalid choice. Please enter a number between 1 and 9.")
 
 if __name__ == "__main__":
-    main()    
-                   
-            
+    main()

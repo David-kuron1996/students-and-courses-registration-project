@@ -1,111 +1,102 @@
-from database import get_db_connection
+from database import get_db_connection, Student
 
 def add_student(name, email, phone=None, address=None):
     """Add a new student to the database."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    session = get_db_connection()
     
     try:
-        cursor.execute(
-            "INSERT INTO students (name, email, phone, address) VALUES (?, ?, ?, ?)",
-            (name, email, phone, address)
-        )
-        conn.commit()
+        # Check if student with this email already exists
+        existing_student = session.query(Student).filter_by(email=email).first()
+        if existing_student:
+            print("Error: A student with this email already exists.")
+            return False
+            
+        new_student = Student(name=name, email=email, phone=phone, address=address)
+        session.add(new_student)
+        session.commit()
         print(f"Student {name} added successfully!")
         return True
-    except sqlite3.IntegrityError:
-        print("Error: A student with this email already exists.")
-        return False
     except Exception as e:
+        session.rollback()
         print(f"Error adding student: {e}")
         return False
     finally:
-        conn.close()
+        session.close()
+
 def update_student(student_id, name=None, email=None, phone=None, address=None):
     """Update student information."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    # Build the update query dynamically
-    fields = []
-    values = []
-    
-    if name:
-        fields.append("name = ?")
-        values.append(name)
-    if email:
-        fields.append("email = ?")
-        values.append(email)
-    if phone:
-        fields.append("phone = ?")
-        values.append(phone)
-    if address:
-        fields.append("address = ?")
-        values.append(address)
-    
-    if not fields:
-        print("No fields to update.")
-        return False
-    
-    values.append(student_id)
-    query = f"UPDATE students SET {', '.join(fields)} WHERE id = ?"
+    session = get_db_connection()
     
     try:
-        cursor.execute(query, values)
-        conn.commit()
-        if cursor.rowcount > 0:
-            print(f"Student with ID {student_id} updated successfully!")
-            return True
-        else:
+        student = session.query(Student).filter_by(id=student_id).first()
+        if not student:
             print(f"Student with ID {student_id} not found.")
             return False
-    except sqlite3.IntegrityError:
-        print("Error: A student with this email already exists.")
-        return False
+            
+        # Check if email is being updated and if it's already used by another student
+        if email and email != student.email:
+            existing_student = session.query(Student).filter_by(email=email).first()
+            if existing_student:
+                print("Error: A student with this email already exists.")
+                return False
+        
+        # Update fields if provided
+        if name:
+            student.name = name
+        if email:
+            student.email = email
+        if phone:
+            student.phone = phone
+        if address:
+            student.address = address
+            
+        session.commit()
+        print(f"Student with ID {student_id} updated successfully!")
+        return True
     except Exception as e:
+        session.rollback()
         print(f"Error updating student: {e}")
         return False
     finally:
-        conn.close()
+        session.close()
 
 def delete_student(student_id):
     """Delete a student from the database."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    session = get_db_connection()
     
     try:
-        cursor.execute("DELETE FROM students WHERE id = ?", (student_id,))
-        conn.commit()
-        if cursor.rowcount > 0:
-            print(f"Student with ID {student_id} deleted successfully!")
-            return True 
-        else:
+        student = session.query(Student).filter_by(id=student_id).first()
+        if not student:
             print(f"Student with ID {student_id} not found.")
             return False
+            
+        session.delete(student)
+        session.commit()
+        print(f"Student with ID {student_id} deleted successfully!")
+        return True
     except Exception as e:
+        session.rollback()
         print(f"Error deleting student: {e}")
         return False
     finally:
-        conn.close() 
-import sqlite3
+        session.close()
+
 def list_students():
     """List all students in the database."""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    session = get_db_connection()
     
     try:
-        cursor.execute("SELECT * FROM students")
-        students = cursor.fetchall()
+        students = session.query(Student).all()
         
         if students:
             print("\nList of Students:")
             print("=" * 50)
             for student in students:
-                print(f"ID: {student['id']}, Name: {student['name']}, Email: {student['email']}, Phone: {student['phone']}, Address: {student['address']}, Created At: {student['created_at']}")
+                print(f"ID: {student.id}, Name: {student.name}, Email: {student.email}, Phone: {student.phone}, Address: {student.address}, Created At: {student.created_at}")
             print("=" * 50)
         else:
             print("No students found.")
     except Exception as e:
         print(f"Error retrieving students: {e}")
     finally:
-        conn.close()
+        session.close()
