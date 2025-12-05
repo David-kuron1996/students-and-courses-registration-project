@@ -37,21 +37,22 @@ Students Registration System
 8. List Courses
 9. Exit
 ========================================
-Enter your choice (1-9): 1 
- == then tap enter ==
 
-        Add New Student
+1.       Enter your choice (1-9): 1 
+            == then tap enter ==
+
+2.        Add New Student
         Enter student name:  kuron
-        == then tap enter == 
+            == then tap enter == 
 
-        Enter student email: kuron@gmail.com
-        == then tap enter == 
+ 3.       Enter student email: kuron@gmail.com
+            == then tap enter == 
 
-        Enter student phone (optional): 0712345678
-        == then tap enter == 
+4.        Enter student phone (optional): 0712345678
+            == then tap enter == 
 
-        Enter student address (optional): Nairobi
-        == then tap enter == 
+5.        Enter student address (optional): Nairobi
+            == then tap enter == 
 
         == it done you check in the database or enter 4 to check student list ==
 
