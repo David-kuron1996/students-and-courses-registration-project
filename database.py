@@ -1,4 +1,3 @@
-# database.py
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
@@ -47,7 +46,6 @@ class Enrollment(Base):
 
 def get_db_connection():
     """Create a connection to the SQLite database using SQLAlchemy."""
-    # Check if database file exists, if not create it
     if not os.path.exists(DB_NAME):
         engine = create_engine(f'sqlite:///{DB_NAME}')
         Base.metadata.create_all(engine)

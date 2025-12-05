@@ -1,4 +1,3 @@
-# debug.py
 from database import init_db
 from student import add_student, update_student, delete_student, list_students
 from course import add_course, update_course, delete_course, list_courses
@@ -6,7 +5,6 @@ from enrollment import add_enrollment, remove_enrollment, list_enrollments
 from main import display_menu, get_user_input
 
 def main():
-    # Initialize the database
     init_db()
     
     while True:
@@ -25,7 +23,6 @@ def main():
             list_students()
             student_id = get_user_input("\nEnter student ID to update: ", int)
             student = None
-            # Get current student data
             from database import get_db_connection, Student
             session = get_db_connection()
             try:
@@ -66,7 +63,6 @@ def main():
             list_courses()
             course_id = get_user_input("\nEnter course ID to update: ", int)
             course = None
-            # Get current course data
             from database import get_db_connection, Course
             session = get_db_connection()
             try:

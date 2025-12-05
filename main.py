@@ -1,4 +1,3 @@
-# main.py
 def get_user_input(prompt, input_type=str):
     """Get user input with type validation."""
     while True:

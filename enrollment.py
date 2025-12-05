@@ -1,4 +1,3 @@
-# enrollment.py
 from database import get_db_connection, Enrollment, Student, Course
 
 def add_enrollment(student_id, course_id):
